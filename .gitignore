@@ -3,3 +3,6 @@
 env/
 venv/
 .idea/
+mysite/books/__pycache__/
+mysite/books/migrations/__pycache__/
+mysite/mysite/__pycache__/

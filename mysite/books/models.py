@@ -5,20 +5,17 @@ from phonenumber_field.modelfields import PhoneNumberField
 class Author(models.Model):
     name = models.CharField(max_length=40)
     surname = models.CharField(max_length=40)
-    # what we need to do with the author's books?
-    # or if rel-ships of Author-Book were defined on the Book model,
-    # we wouldn't need to define them again?
-    phone_number = PhoneNumberField()
-    email = models.EmailField()
+    phone_number = PhoneNumberField(null=True)
+    email = models.EmailField(null=True)
 
 
 class Publisher(models.Model):
     name = models.CharField(max_length=40)
     country = models.CharField(max_length=20)
-    city = models.CharField(max_length=10)
-    email = models.EmailField()
-    phone_number = PhoneNumberField()
-    website = models.URLField()
+    city = models.CharField(max_length=100, null=True)
+    email = models.EmailField(null=True)
+    phone_number = PhoneNumberField(null=True)
+    website = models.URLField(null=True)
 
 
 class Category(models.Model):
@@ -27,7 +24,7 @@ class Category(models.Model):
 
 class Book(models.Model):
     title = models.CharField(max_length=100)
-    author = models.ManyToManyField(Author)
+    author = models.ManyToManyField(Author, related_name='books')
     publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
-    category = models.ManyToManyField(Category)
-    publication_date = models.DateField()
+    category = models.ManyToManyField(Category, related_name='books')
+    publication_date = models.DateField(null=True)
