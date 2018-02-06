@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create book</title>
+</head>
+<body>
+<p style="text-align: right;"><a href="{% url 'index' %}">go to index</a></p>
+<hr>
+<p>Add your book...</p>
+{% if form.errors %}
+    <p style="color: red;">
+        Please correct the error{{ form.errors|pluralize }} below.
+    </p>
+{% endif %}
+
+<form action="" method="post" novalidate>
+    <table>
+        {{ form.as_table }}
+    </table>
+    {% csrf_token %}
+    <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>

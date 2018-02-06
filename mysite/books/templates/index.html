@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Hello</h1>
-
+<a href="{% url 'create_book' %}">create new book...</a>
 <ul>{% for book in books %}
     <li>book title: {{ book.title }}
         <ul>
@@ -16,6 +16,7 @@
             <li>category: {% for category in book.category.all %}{{ category.name }}{% endfor %}</li>
         </ul>
     </li>
+    <br>
     {% endfor %}
 </ul>
 </body>
