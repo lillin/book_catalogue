@@ -17,12 +17,11 @@ def create_book(request):
         if form.is_valid():
             cleaned_data = form.cleaned_data
 
-            publisher = Publisher.objects.create(name=cleaned_data['publisher'])
-            # actually I don't know what can I do with authors with names like Gabriel Garcia Markes or Rainer Maria Rilke
-            # I tried to use surname=cleaned_data['author'].split(" ")[1:] but it added a list to db
-            author = Author.objects.create(name=cleaned_data['author'].split(" ")[0],
-                                           surname=cleaned_data['author'].split(" ")[1])
-            category = Category.objects.create(name=cleaned_data['category'])
+            publisher, created = Publisher.objects.get_or_create(name=cleaned_data['publisher'])
+
+            author, created = Author.objects.get_or_create(name=cleaned_data['author'].split(" ")[0],
+                                                           surname=" ".join(cleaned_data['author'].split(" ")[1:]))
+            category, created = Category.objects.get_or_create(name=cleaned_data['category'])
 
             book = Book.objects.create(title=cleaned_data['title'],
                                        publisher=publisher,

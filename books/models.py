@@ -23,7 +23,7 @@ class Category(models.Model):
 
 
 class Book(models.Model):
-    title = models.CharField(max_length=100, unique=True)
+    title = models.CharField(max_length=100)
     author = models.ManyToManyField(Author, related_name='books')
     publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
     category = models.ManyToManyField(Category, related_name='books')
