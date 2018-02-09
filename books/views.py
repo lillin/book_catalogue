@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from .forms import CreateBookForm
 from .models import Book, Publisher, Author, Category
 
@@ -33,3 +33,17 @@ def create_book(request):
     else:
         form = CreateBookForm()
     return render(request, 'create_book.html', {'form': form})
+
+# TODO: make 1 API URL which returns only data about books (JSON need)
+
+
+def get_books(request):
+    books = Book.objects.all()
+    books_list = []
+    for book in books:
+        books_list.append({'title': book.title,
+                           'author': ",".join([author.name + ' ' + author.surname for author in book.author.all()]),
+                           'publisher': book.publisher.name,
+                           'category': ",".join([category.name for category in book.category.all()]),
+                           'publication date': book.publication_date})
+    return JsonResponse(books_list, safe=False)
