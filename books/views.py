@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
+from rest_framework.viewsets import ModelViewSet
 from .forms import CreateBookForm
 from .models import Book, Publisher, Author, Category
+from .serializers import BookSerializers
 
 
 def index(request):
@@ -34,7 +36,7 @@ def create_book(request):
         form = CreateBookForm()
     return render(request, 'create_book.html', {'form': form})
 
-# TODO: make 1 API URL which returns only data about books (JSON need)
+# TODO:  front-end for get_books
 
 
 def get_books(request):
@@ -47,3 +49,9 @@ def get_books(request):
                            'category': ",".join([category.name for category in book.category.all()]),
                            'publication date': book.publication_date})
     return JsonResponse(books_list, safe=False)
+
+
+class BooksViewSet(ModelViewSet):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializers
+
