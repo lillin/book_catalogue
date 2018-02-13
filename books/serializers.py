@@ -4,17 +4,12 @@ from .models import Book, Author, Category
 
 class CategorySerializer(ModelSerializer):
 
-    name = CharField()
-
     class Meta:
         model = Category
         fields = ['name']
 
 
 class AuthorSerializer(ModelSerializer):
-
-    name = CharField()
-    surname = CharField()
 
     class Meta:
         model = Author
