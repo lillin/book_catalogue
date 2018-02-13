@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from rest_framework.viewsets import ModelViewSet
 from .forms import CreateBookForm
 from .models import Book, Publisher, Author, Category
-from .serializers import BookSerializers
+from .serializers import BookSerializer
 
 
 def index(request):
@@ -51,7 +51,6 @@ def get_books(request):
     return JsonResponse(books_list, safe=False)
 
 
-class BooksViewSet(ModelViewSet):
+class BookViewSet(ModelViewSet):
     queryset = Book.objects.all()
-    serializer_class = BookSerializers
-
+    serializer_class = BookSerializer

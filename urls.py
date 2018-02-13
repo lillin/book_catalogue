@@ -25,5 +25,5 @@ urlpatterns = [
     path('index/', views.index, name='index'),
     path('index/create_book', views.create_book, name='create_book'),
     path('get/books', views.get_books),
-    path('books', views.BooksViewSet.as_view({'get': 'list'}))
+    path('books', views.BookViewSet.as_view({'get': 'list'}))
 ]

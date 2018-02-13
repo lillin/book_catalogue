@@ -3,34 +3,25 @@ from .models import Book, Author, Category
 
 
 class CategorySerializer(ModelSerializer):
-    """
-    Serializer for Category model
-    """
 
-    name = CharField(source='category__name')
+    name = CharField()
 
     class Meta:
         model = Category
-        fields = {'name'}
+        fields = ['name']
 
 
 class AuthorSerializer(ModelSerializer):
-    """
-    Serializer for Author model
-    """
 
-    name = CharField(source='author__name')
-    surname = CharField(source='author__surname')
+    name = CharField()
+    surname = CharField()
 
     class Meta:
         model = Author
-        fields = {'name', 'surname'}
+        fields = ['name', 'surname']
 
 
 class BookSerializer(ModelSerializer):
-    """
-    Serializer for Book model
-    """
 
     author = AuthorSerializer(read_only=True, many=True)
     category = CategorySerializer(read_only=True, many=True)
@@ -38,4 +29,4 @@ class BookSerializer(ModelSerializer):
 
     class Meta:
         model = Book
-        fields = {'title', 'author', 'publisher', 'category', 'publication_date'}
+        fields = ['title', 'author', 'publisher', 'category', 'publication_date']
