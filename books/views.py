@@ -54,3 +54,7 @@ def get_books(request):
 class BookViewSet(ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+
+
+def do_smth(a, b):
+    return a + b
