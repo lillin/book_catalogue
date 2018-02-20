@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.decorators import api_view
+
 from .forms import CreateBookForm
 from .models import Book, Publisher, Author, Category
 from .serializers import BookSerializer
@@ -36,25 +38,15 @@ def create_book(request):
         form = CreateBookForm()
     return render(request, 'create_book.html', {'form': form})
 
-# TODO:  front-end for get_books
 
-
+@api_view(['GET'])
 def get_books(request):
     books = Book.objects.all()
-    books_list = []
-    for book in books:
-        books_list.append({'title': book.title,
-                           'author': ",".join([author.name + ' ' + author.surname for author in book.author.all()]),
-                           'publisher': book.publisher.name,
-                           'category': ",".join([category.name for category in book.category.all()]),
-                           'publication date': book.publication_date})
-    return JsonResponse(books_list, safe=False)
+    serializer = BookSerializer(books, many=True)
+    print(serializer)
+    return JsonResponse(serializer.data, safe=False)
 
 
 class BookViewSet(ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-
-
-def do_smth(a, b):
-    return a + b
